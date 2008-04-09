@@ -1,5 +1,3 @@
-(in-package :goiaba)
-(use-package :lisp-unit)
 
 (define-test reducao-adams
   (assert-equal '((0 1) (1 0)) (reducao-adams '((0 1) (1 0))))

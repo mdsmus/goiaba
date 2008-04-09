@@ -1,6 +1,3 @@
-(in-package :goiaba)
-(use-package :lisp-unit)
-
 (define-test intervalo
   (assert-equal 1 (intervalo 1 2))
   (assert-equal -1 (intervalo 2 1))

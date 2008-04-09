@@ -1,6 +1,3 @@
-(in-package :goiaba)
-(use-package :lisp-unit)
-
 (define-test inverter-cas
   (assert-equal '(-1) (inverter-cas '(1)))
   (assert-equal '(-1 1) (inverter-cas '(1 -1)))

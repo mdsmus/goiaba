@@ -2,7 +2,7 @@
 
 (asdf:defsystem :goiaba
   :name "goiaba"
-  :version "0.1"
+  :version "0.2"
   :author "Marcos di Silva e Pedro Kroger"
   :serial t
   :depends-on (:lisp-unit :cl-ppcre)
@@ -15,10 +15,4 @@
                (:file "plot")
                (:file "adams")
                (:file "friedmann")
-               (:file "morris")
-               (:file "test-operacoes-contorno")
-               (:file "test-operacoes-lista")
-               (:file "test-adams")
-               (:file "test-friedmann")
-               (:file "test-morris")
-               ))
+               (:file "morris")))
