@@ -2,10 +2,6 @@
 
 ;; funções relacionadas a pares
 
-(defun menor-altura-contorno (contorno-com-duracao)
-  "Retorna a menor altura de um contorno."
-  (first (sort (mapcar #'second contorno-com-duracao) #'<)))
-
 (defmethod menor-altura ((objeto contorno-com-duracao))
   "Retorna a menor altura de um contorno em codificação com duração."
   (first (sort (mapcar #'second (args objeto)) #'<)))
@@ -13,10 +9,6 @@
 (defmethod menor-altura ((objeto contorno-simples))
   "Retorna a menor altura de um contorno em codificação simples."
   (first (sort (args objeto) #'<)))
-
-(defun maior-altura-contorno (contorno-com-duracao)
-    "Retorna a maior altura de um contorno."
-    (first (sort (mapcar #'second contorno-com-duracao) #'>)))
 
 (defmethod maior-altura ((objeto contorno-com-duracao))
   "Retorna a maior altura de um contorno em codificação com duração."
@@ -76,33 +68,12 @@ de um dado eixo. Esta função é útil para retrogradar um contorno."
 
 ;; funções relacionadas a contornos
 
-(defun transpor-contorno (contorno-com-duracao fator)
-  "Transpõe todos os pontos de um contorno a partir de um dado fator."
-  (mapcar #'(lambda (ponto)
-              (transpor-ponto ponto fator)) contorno-com-duracao))
-
-(defun inverter-contorno (contorno-com-duracao eixo)
-  "Inverte todos os pontos de um contorno em relação à altura a
-partir de um dado eixo."
-  (mapcar #'(lambda (ponto)
-              (%inverter-ponto ponto eixo)) contorno-com-duracao))
-
-(defun retrogradar-contorno (contorno-com-duracao)
-  "Retrograda um contorno. É o mesmo que inverter o contorno em
-relação à duração a partir do seu ponto médio."
-  (reverse
-   (mapcar #'(lambda (ponto)
-               (%retrogradar-ponto ponto
-                                  (ponto-medio-duracao
-                                  contorno-com-duracao)))
-                                  contorno-com-duracao)))
-
 (defun aumentar-altura (contorno-com-duracao fator)
   "Multiplica a altura de todos os pares de um contorno por um
 dado fator."
   (mapcar #'(lambda (ponto)
               (aumentar-altura-ponto ponto fator))
-              contorno-com-duracao))
+          contorno-com-duracao))
 
 ;; FIXME: a abstracao da aumentacao de duracao esta errada
 (defun aumentar-duracao (contorno-com-duracao fator)
@@ -123,10 +94,7 @@ valores de duração."
 
 (defun insere-ponto (contorno ponto)
   "Insere um ponto em um contorno de um único segmento."
-  (ordena-crescente-duracao (append
-                             (list (first contorno))
-                             (list ponto)
-                             (list (second contorno)))))
+  (ordena-crescente-duracao (list (first contorno) ponto (second contorno))))
 
 (defun remover-duplicatas (contorno-com-duracao)
   "Remove duplicatas de uma lista de pares e coloca em ordem
@@ -167,8 +135,7 @@ fator."
 (defmethod transpor ((objeto contorno-com-duracao) fator)
   "Transpõe um contorno em codificação com duração a partir de um dado
 fator."
-  (mapcar #'(lambda (ponto)
-              (transpor (make-ponto ponto) fator)) (args objeto)))
+  (mapcar #'(lambda (ponto) (transpor (make-ponto ponto) fator)) (args objeto)))
 
 (defmethod inverter ((objeto contorno-simples) &optional eixo)
   "Inverte um contorno em codificação simples em relação à altura a
@@ -180,8 +147,7 @@ partir de um dado eixo."
   "Inverte um contorno em codificação com duração em relação à altura
 a partir de um dado eixo."
   (let* ((eixo (or eixo (ponto-medio-altura (args objeto)))))
-    (mapcar #'(lambda (ponto)
-                (%inverter-ponto ponto eixo)) (args objeto))))
+    (mapcar #'(lambda (ponto) (%inverter-ponto ponto eixo)) (args objeto))))
 
 (defmethod retrogradar ((objeto list))
   (if (consp (first objeto))
