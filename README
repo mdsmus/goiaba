@@ -1,0 +1,42 @@
+Para plotar um contorno usando as funções em plot.lisp crie um arquivo
+lisp separado (e.g. foo.lisp) com o seguinte conteudo:
+
+* define o diretório onde os arquivos de plotagem vao ser gerados (formato .eps)
+
+(defparameter *dir* "/tmp/")
+
+* plota um contorno. o formato é (plot-contorno contorno titulo <nome do arquivo final>)
+
+(plot-contorno '((0 1) (3 4) (2 8)) "Contorno 1" "resultado")
+
+* mostra o arquivo final no gv. o arquivo gerado terá extensão .eps,
+  mas você não precisa/deve colocar a extensão no nome do arquivo para
+  as funções plot-contorno e ver.
+
+(ver "resultado")
+
+* a função preview gera um arquivo .ps com todos os contornos
+
+(preview "t0" "t1" "t2" "t3" "t4" "t5" "t6")
+
+* a função preview-all aplica uma lista de funções e parâmetros a um
+  contorno. observe que a lista de funções deve ser no formato
+  (funcao1 parametros1 funcao2 parametros2 ... funcaon parametrosn) de
+  modo que se uma função não aceita argumentos voce deve colocar nil:
+
+(preview-all '((1 1) (2 4) (5 3) (7 5))
+                   '(transpor-contorno 1
+                     retrogradar-contorno nil
+                     inverter-contorno 0
+                     aumentar-altura 2
+                     aumentar-duracao 2
+                     rotar-contorno 2))
+
+* A função preview-all-short é uma função de conviniencia. Ela usa a
+  função preview para aplicar as funções transpor-contorno,
+  retrogradar-contorno, inverter-contorno, aumentar-altura,
+  aumentar-duracao, e rotar-contorno NESSA ORDEM. Ela aceita como
+  parâmetros o contorno e um argumento para cada uma das funçoes
+  listadas:
+
+(preview-all-short '((1 1) (2 4) (5 3) (7 5)) 1 nil 0 2 2 2)
