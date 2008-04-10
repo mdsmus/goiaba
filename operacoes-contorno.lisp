@@ -20,18 +20,14 @@
 
 (defun ponto-medio-duracao (contorno-com-duracao)
   "Retorna o ponto médio de um contorno em relação à duração."
-  (let ((maior (first (sort (mapcar #'first contorno-com-duracao)
-  #'>)))
-        (menor (first (sort (mapcar #'first contorno-com-duracao)
-        #'<))))
+  (let ((maior (first (sort (mapcar #'first contorno-com-duracao) #'>)))
+        (menor (first (sort (mapcar #'first contorno-com-duracao) #'<))))
     (/ (+ maior menor) 2)))
 
 (defun ponto-medio-altura (contorno-com-duracao)
     "Retorna o ponto médio de um contorno em relação à altura."
-  (let ((maior (first (sort (mapcar #'second contorno-com-duracao)
-  #'>)))
-        (menor (first (sort (mapcar #'second contorno-com-duracao)
-        #'<))))
+  (let ((maior (first (sort (mapcar #'second contorno-com-duracao) #'>)))
+        (menor (first (sort (mapcar #'second contorno-com-duracao) #'<))))
     (/ (+ maior menor) 2)))
 
 (defun transpor-ponto (ponto fator)

@@ -63,7 +63,7 @@ e valor de oitava."
 lista de alturas absolutas."
   (loop
      for x in lista-alturas-absolutas
-     collect (list (remainder x 12)(* 12 (floor x 12)))))
+     collect (list (remainder x 12) (* 12 (floor x 12)))))
 
 (defun lily->contorno-com-duracao (codigo-lily)
   "Retorna um contorno a partir de uma string em formato do Lilypond."
