@@ -1,19 +1,19 @@
 (defclass ponto ()
     ((args :accessor args :initarg :args)))
 
-(defclass contorno-com-duracao ()
+(defclass contorno-simples (ponto)
   ((args :accessor args :initarg :args)))
 
-(defclass contorno-simples ()
+(defclass contorno-com-duracao (contorno-simples)
   ((args :accessor args :initarg :args)))
 
-(defclass matriz-de-comparacao ()
-  ((args :accessor args :initarg :args)))
-
-(defclass classe-de-contorno ()
+(defclass classe-de-contorno (contorno-com-duracao)
   ((args :accessor args :initarg :args)))
 
 (defclass contour-adjacency-series ()
+  ((args :accessor args :initarg :args)))
+
+(defclass matriz-de-comparacao ()
   ((args :accessor args :initarg :args)))
 
 (defun make-ponto (args)
