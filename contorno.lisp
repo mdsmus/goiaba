@@ -26,9 +26,6 @@
     "Retorna o ponto médio de um contorno em relação à altura."
     (/ (+ (maior-altura objeto) (menor-altura objeto)) 2.0))
 
-(defun map-contorno (fn lista)
-  (make-contorno (mapcar fn lista)))
-  
 (defmethod aumentar-altura ((objeto contorno) fator)
   "Multiplica a altura de todos os pares de um contorno por um
 dado fator."
@@ -52,40 +49,29 @@ crescente a partir de x."
 (defmethod remover-alturas-repetidas ((objeto contorno))
   "Remove os pontos de um contorno que têm alturas repetidas, mantendo
 o primeiro ponto em ordem de aparição."
-  (remove-duplicates contorno :key #'second :from-end t))
-
-(defun contorno->contorno-simples (contorno)
-  "Retorna um contorno representado por uma lista de alturas a partir
-de um contorno representado por pares coordenados."
-  (mapcar #'second contorno))
-
+  (remove-duplicates (pontos objeto) :key #'second :from-end t))
 
 (defmethod transpor ((objeto contorno) fator)
   "Transpõe um contorno em codificação com duração a partir de um dado
 fator."
-  (mapcar #'(lambda (ponto) (transpor (make-ponto ponto) fator)) (args objeto)))
+  (map-contorno #L(transpor !1 fator) (pontos objeto)))
 
 (defmethod inverter ((objeto contorno) &optional eixo)
   "Inverte um contorno em codificação com duração em relação à altura
 a partir de um dado eixo."
-  (let* ((eixo (or eixo (ponto-medio-altura (args objeto)))))
-    (mapcar #'(lambda (ponto) (%inverter-ponto ponto eixo)) (args objeto))))
+  (let ((eixo (or eixo (ponto-medio-altura (pontos objeto)))))
+    (map-contorno #L(inverter !1 eixo) (pontos objeto))))
 
+;;; FIXME: porque retrogradar-inverte?
 (defmethod retrogradar ((objeto contorno))
   "Retrograda um contorno em codificação com duração."
-  (reverse
-   (mapcar #'(lambda (ponto)
-               (%retrogradar-ponto ponto
-                                  (ponto-medio-duracao
-                                   (args objeto))))
-           (args objeto))))
+  (let ((ponto-medio (ponto-medio-duracao (pontos objeto))))
+    (reverse (map-contorno #L(retrogradar-inverte !1 ponto-medio) (pontos objeto)))))
 
+;;; FIXME: se fator for >length da problema
 (defmethod rotacionar ((objeto contorno) &optional (fator 1))
   "Rotaciona um contorno em codificação com duração a partir de um
 dado fator."
-  (let* ((x-contorno (mapcar #'first (args objeto)))
-         (y-contorno (mapcar #'second (args objeto)))
-         (y-rotado (append
-                    (subseq y-contorno fator)
-                    (subseq y-contorno 0 fator))))
-    (mapcar #'list x-contorno y-rotado)))
+  (let ((x (mapcar #'ponto-x (pontos objeto)))
+        (y (mapcar #'ponto-y (pontos objeto))))
+    (mapcar #'list x (append (subseq y fator) (subseq y 0 fator)))))

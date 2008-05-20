@@ -10,6 +10,7 @@
                (:file "classes")
                (:file "ponto")
                (:file "contorno")
+               (:file "contorno-simples")
                ;;(:file "utils")
                ;;(:file "lily")
                ;;(:file "operacoes-contorno")
