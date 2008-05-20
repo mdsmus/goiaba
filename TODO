@@ -1,0 +1,38 @@
+> ponto -> contorno-simples -> contorno-com-duracao -> classe-de-contorno
+
+Eu acho que é assim:
+
+ponto -> contorno-com-duracao -> contorno-simples -> classe-de-contorno
+
+Preciso de pelo menos dois pontos para isso:
+
+pontos (0 2) e (5 6)
+contorno-simples (2 6)
+contorno-com-duracao ((0 2)(5 6))
+contour-adjacency-series (+)
+matriz-de-comparacao ((0 +)(- 0))
+classe-de-contorno (0 1)
+
+
+> voce pode me mandar outro exemplo com 5 pontos? (so para eu ter
+> variedade)
+
+Claro. No anterior substitua + por 1 e - por -1
+
+pontos (0 3) (2 4) (5 7) (6 9) (8 1)
+
+contorno-com-duracao ((0 3)(2 4)(5 7)(6 9)(8 1))
+
+contorno-simples (3 4 7 9 1)
+
+contour-adjacency-series (1 1 1 -1)
+
+matriz-de-comparacao ((0 1 1 1 -1) (-1 0 1 1 -1) (-1 -1 0 1 -1) (-1 -1
+-1 0 -1) (1 1 1 1 0))
+
+classe-de-contorno (1 2 3 4 0)
+
+-- 
+Marcos di Silva
+http://www.marcosdisilva.net
+
