@@ -2,7 +2,7 @@
 
 (enable-sharp-l-syntax)
 
-(defmethod converter ((objeto contorno))
+(defmethod converter ((objeto contorno-duracao))
   "Retorna um contorno representado por uma lista de alturas a partir
  de um contorno representado por pares coordenados."
   (map-contorno-simples #'ponto-y (pontos objeto)))
@@ -10,7 +10,7 @@
 (defmethod converter ((objeto contorno-simples))
   "Retorna um contorno representado por pares coordenados a partir de
 uma lista de alturas (contorno simples)."
-  (make-contorno
+  (make-contorno-duracao
    (loop
          for elemento in (pontos objeto)
          for n from 0 to (length (pontos objeto))

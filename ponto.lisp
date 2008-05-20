@@ -14,8 +14,7 @@ dado eixo."
 (defmethod retrogradar ((obj ponto))
   (make-ponto (ponto-y obj) (ponto-x obj)))
 
-;;; FIXME: qual a diferenca com inversao?
-(defmethod retrogradar-inverte ((obj ponto) eixo)
+(defmethod inverter-por-y ((obj ponto) eixo)
   "Inverte um ponto de um contorno em relação à duração a partir
 de um dado eixo. Esta função é útil para retrogradar um contorno."
   (make-ponto (- (* 2 eixo) (ponto-x obj))

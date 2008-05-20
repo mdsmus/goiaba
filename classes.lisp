@@ -6,7 +6,7 @@
    (y :accessor ponto-y :initarg :y)))
 
 (defmethod print-object ((obj ponto) stream)
-  (format stream "#p{~d ~d}" (ponto-x obj) (ponto-y obj)))
+  (format stream "#p(~d ~d)" (ponto-x obj) (ponto-y obj)))
 
 (defun make-ponto (x y)
   (make-instance 'ponto :x x :y y))
@@ -23,41 +23,42 @@
 (set-dispatch-macro-character #\# #\P #'%make-ponto)
 
 ;;; contorno com duração
-(defclass contorno ()
+(defclass contorno-duracao ()
   ;; guarda os pontos em uma lista
   ((pontos :accessor pontos :initarg :pontos)))
 
-(defmethod print-object ((obj contorno) stream)
-  (format stream "#c<~{~a~^ ~}>" (pontos obj)))
+(defmethod print-object ((obj contorno-duracao) stream)
+  (format stream "#d(~{~a~^ ~})" (pontos obj)))
 
-(defun %make-contorno (stream subchar arg)
+(defun %make-contorno-duracao (stream subchar arg)
   (declare (ignore subchar arg))
-  (make-instance 'contorno :pontos (read stream t nil t)))
+  (make-instance 'contorno-duracao :pontos (read stream t nil t)))
 
-(set-dispatch-macro-character #\# #\C #'%make-contorno)
+(set-dispatch-macro-character #\# #\D #'%make-contorno-duracao)
 
-(defun make-contorno (lista-de-pontos)
-  (make-instance 'contorno :pontos lista-de-pontos))
+(defun make-contorno-duracao (lista-de-pontos)
+  (make-instance 'contorno-duracao :pontos lista-de-pontos))
 
-(defun map-contorno (fn lista)
-  (make-contorno (mapcar fn lista)))
+(defun map-contorno-duracao (fn lista)
+  (make-contorno-duracao (mapcar fn lista)))
 
-(defun make-contorno-lista (lista)
+(defun make-contorno-duracao-lista (lista)
   "Cria contorno a partiro de uma lista de pares. Cada lista de pares
 é convertida para o tipo ponto."
-  (map-contorno #'make-ponto-lista lista))
+  (map-contorno-duracao #'make-ponto-lista lista))
 
+;;; contorno simples
 (defclass contorno-simples ()
   ((pontos :accessor pontos :initarg :pontos)))
 
 (defmethod print-object ((obj contorno-simples) stream)
-  (format stream "#s<~{~a~^ ~}>" (pontos obj)))
+  (format stream "#c(~{~a~^ ~})" (pontos obj)))
 
 (defun %make-contorno-simples (stream subchar arg)
   (declare (ignore subchar arg))
-  (make-instance 'contorno-simples :valor (read stream t nil t)))
+  (make-instance 'contorno-simples :pontos (read stream t nil t)))
 
-(set-dispatch-macro-character #\# #\S #'%make-contorno-simples)
+(set-dispatch-macro-character #\# #\C #'%make-contorno-simples)
 
 (defun make-contorno-simples (lista)
   (make-instance 'contorno-simples :pontos lista))
@@ -79,7 +80,7 @@
 (defgeneric maior-duracao (objeto))
 (defgeneric menor-altura (objeto))
 (defgeneric menor-duracao (objeto))
-(defgeneric ordena-crescente-duracao (objeto))
+(defgeneric ordena-duracao-crescente (objeto))
 (defgeneric ponto-medio-altura (objeto))
 (defgeneric ponto-medio-duracao (objeto))
 (defgeneric remover-alturas-repetidas (objeto))

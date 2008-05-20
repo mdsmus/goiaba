@@ -5,15 +5,14 @@
   :version "0.4"
   :author "Marcos di Silva e Pedro Kroger"
   :serial t
-  :depends-on (:lisp-unit :cl-ppcre :arnesi)
+  :depends-on (:cl-ppcre :arnesi)
   :components ((:file "packages")
                (:file "classes")
                (:file "ponto")
-               (:file "contorno")
+               (:file "contorno-duracao")
                (:file "contorno-simples")
                (:file "utils")
                (:file "lily")
-               (:file "operacoes-lista")
                (:file "plot")
 ;;;                (:module literatura
 ;;;                         :components ((:file "adams")

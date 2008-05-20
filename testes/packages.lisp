@@ -1,2 +1,2 @@
-(defpackage #:test-goiaba
+(defpackage #:goiaba-testes
   (:use #:cl #:lisp-unit #:goiaba))

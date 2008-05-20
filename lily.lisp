@@ -2,6 +2,11 @@
 
 (defparameter *nome-de-nota* '(c c# d d# e f f# g g# a a# b))
 
+
+(defun remainder (n m)
+  "Retorna o resto de uma divisão."
+  (second (multiple-value-list (floor n m))))
+
 (defun nota->numero (nota)
   (position (intern (string-upcase nota)) *nome-de-nota*))
 
