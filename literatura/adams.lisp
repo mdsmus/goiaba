@@ -1,27 +1,26 @@
 (in-package #:goiaba)
 
+(enable-sharp-l-syntax)
+
 ;; FIXME: inserir recorrencia
-(defun reducao-adams (contorno-com-duracao)
+(defmethod reducao-adams ((objeto contorno-duracao))
   "Faz redução de contorno sugerida por Adams
 \cite{adams1976mct}. Reduz um contorno a quatro pontos: ponto inicial,
 final, mais alto e mais baixo."
-  (let* ((primeiro (first contorno-com-duracao))
-         (ultimo (first (reverse contorno-com-duracao)))
-         (mais-agudo (first (sort contorno-com-duracao #'> :key #'second)))
-         (mais-grave (first (sort contorno-com-duracao #'< :key #'second))))
+  (let* ((primeiro (first (pontos objeto)))
+         (ultimo (last1 (pontos objeto)))
+         (mais-agudo (first (sort (pontos objeto) #'> :key #'ponto-y)))
+         (mais-grave (first (sort (pontos objeto) #'< :key #'ponto-y))))
     (remover-duplicatas
-     (sort (list primeiro mais-agudo mais-grave ultimo) #'< :key
-     #'first))))
+     (make-contorno-duracao (sort (list primeiro mais-agudo mais-grave ultimo) #'< :key #'ponto-x)))))
 
-(defun inclinacoes-contorno (contorno-com-duracao)
+(defmethod inclinacoes-contorno ((objeto contorno-duracao))
   "Retorna as diferenças de altura entre os pontos de um
 contorno, ou seja, as inclinações entre os pontos de um contorno
 em valores absolutos."
-  (let* ((tamanho (length contorno-com-duracao))
-         (lista (mapcar #'second contorno-com-duracao)))
-    (subseq
-     (mapcar #'(lambda (a b) (- a b)) (rotate lista) lista)
-     0 (- tamanho 1))))
+  (let* ((tamanho (length (pontos objeto)))
+         (lista (mapcar #'ponto-y (pontos objeto))))
+    (subseq (mapcar #L(- !1 !2) (rotate lista) lista) 0 (1- tamanho))))
 
 (defun inclinacoes-contorno-positivo-negativo (contorno-com-duracao)
   "Retorna valores 1, 0 e -1 para inclinação positiva, nula e

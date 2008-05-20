@@ -14,8 +14,7 @@
                (:file "utils")
                (:file "lily")
                (:file "plot")
-;;;                (:module literatura
-;;;                         :components ((:file "adams")
-;;;                                      (:file "friedmann")
-;;;                                      (:file "morris")))
-               ))
+               (:module literatura
+                        :components ((:file "adams")
+                                     (:file "friedmann")
+                                     (:file "morris")))))
