@@ -1,7 +1,7 @@
 Funções para implementar:
 
-* int_n
-* csim
-* cemb
-* algoritmo de redução de morris
+* int_n (morris/marvin)
+* csim (marvin)
+* cemb (marvin)
+* algoritmo de redução (morris)
 
