@@ -1,33 +1,57 @@
 (in-package #:goiaba)
 
-(defun %plot-contorno (x y lista-contornos nome-e-cores)
+(defun agrupa-por-3 (lista)
+  (loop for x from 0 to (- (length lista) 3) by 3 collect
+	(subseq lista x (+ x 3))))
+
+(defun make-lista-cores (lista)
+  (loop for (contorno nome cor) in lista collect
+	(list nome (get-color cor))))
+
+(defun plot-contorno-full (x y &rest lista-contornos)
+  "Plota uma sucessão de contornos no formato <contorno nome cor> no
+mesmo grafico. X e y determinam onde o gráfico aparece na página."
+  (let ((lista (agrupa-por-3 lista-contornos)))
+    (pdf:draw-object
+     (make-instance 'pdf:plot-xy :x x :y y :width 400 :height 300
+		    :labels&colors (make-lista-cores lista)
+		    :series (mapcar #'contorno->lista (mapcar #'first lista))
+		    :y-axis-options '(:min-value 0)
+		    :x-axis-options '(:min-value 0)))))
+
+(defun plot-contorno (x y nome contorno)
+  "Plota um único contorno"
   (pdf:draw-object
-   (make-instance 'pdf:plot-xy :x x :y y :width 400 :height 300
-		  :labels&colors nome-e-cores
-		  :series (mapcar #'contorno->lista lista-contornos)
+   (make-instance 'pdf:plot-xy :x x :y y :width 150 :height 150
+		  :labels&colors (list (list nome (get-color :black)))
+		  :series (list (contorno->lista contorno))
 		  :y-axis-options '(:min-value 0)
 		  :x-axis-options '(:min-value 0))))
 
+(defun plot-figura (contorno nome arquivo)
+  (let ((*default-page-bounds* #(0 650 280 850)))
+    (pdf:with-document ()
+      (pdf:with-page ()
+	(plot-contorno 50 680 nome contorno))
+      (pdf:write-document arquivo))))
+
 (let ((c1 (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))))
-  ;;(plot-contorno (insere-ponto contorno-1 '(8 9))
   (pdf:with-document ()
     (pdf:with-page ()
-      (%plot-contorno 50 500 (list c1
-				   (transpor c1 2)
-				   (retrogradar c1)
-				   (inverter c1)
-				   (aumentar-altura c1 2)
-				   (rotacionar c1 1)
-				   (insere-ponto c1 '(1 3) 2)
-				 )
-		      '(("original" (1.0 0.0 0.0))
-			("transposição" (0.0 1.0 0.0))
-			("retrógrado" (0.0 0.0 1.0))
-			("inversão" (1.0 0.0 1.0))
-			("aumentar-altura" (0.0 1.0 1.0))
-			("rotação" (1.0 1.0 0.0))
-			("insere ponto" (0.0 1.0 0.0))
-			)
-		      ))
+      (plot-contorno-full 50 500
+			  c1 "original" :red
+			  (transpor c1 2) "transposição" :green
+			  (retrogradar c1) "retrógrado" :blue
+			  (inverter c1) "inversão" :pink
+			  (aumentar-altura c1 2) "aumentar-altura" :lightblue
+			  (rotacionar c1 1) "rotação" :darkcyan
+			  (insere-ponto c1 '(1 3) 2) "insere ponto" :purple)
+      (plot-contorno 50  300 "original" c1)
+      (plot-contorno 300 300 "transposição" (transpor c1 2))
+      )
     (pdf:write-document "/tmp/foo.pdf")
     ))
+
+(plot-figura (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))
+	     "original"
+	     "/tmp/figura.pdf")
