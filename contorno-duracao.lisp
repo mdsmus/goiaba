@@ -2,6 +2,9 @@
 
 (enable-sharp-l-syntax)
 
+(defmethod contorno->lista ((objeto contorno-duracao))
+  (mapcar #'ponto->lista (pontos objeto)))
+
 (defmethod menor-altura ((objeto contorno-duracao))
   "Retorna a menor altura de um contorno em codificação com duração."
   (first (sort (mapcar #'ponto-y (pontos objeto)) #'<)))
@@ -68,12 +71,12 @@ fator."
 (defmethod inverter ((objeto contorno-duracao) &optional eixo)
   "Inverte um contorno em codificação com duração em relação à altura
 a partir de um dado eixo."
-  (let ((eixo (or eixo (ponto-medio-altura (pontos objeto)))))
+  (let ((eixo (or eixo (ponto-medio-altura objeto))))
     (map-contorno-duracao #L(inverter !1 eixo) (pontos objeto))))
 
 (defmethod retrogradar ((objeto contorno-duracao))
   "Retrograda um contorno em codificação com duração."
-  (let ((ponto-medio (ponto-medio-duracao (pontos objeto))))
+  (let ((ponto-medio (ponto-medio-duracao objeto)))
     (reverse (map-contorno-duracao #L(inverter-por-y !1 ponto-medio) (pontos objeto)))))
 
 (defmethod rotacionar ((objeto contorno-duracao) &optional (fator 1))
