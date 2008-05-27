@@ -45,7 +45,7 @@ dado fator."
     (if (> segmento (length pontos))
         (error "Segmento não pode ser maior que tamanho do contorno.")
         (make-contorno-duracao (append (subseq pontos 0 segmento)
-                                       (list ponto)
+                                       (list (make-ponto-lista ponto))
                                        (subseq pontos segmento))))))
 
 (defmethod ordena-duracao-crescente ((objeto contorno-duracao))
@@ -77,7 +77,7 @@ a partir de um dado eixo."
 (defmethod retrogradar ((objeto contorno-duracao))
   "Retrograda um contorno em codificação com duração."
   (let ((ponto-medio (ponto-medio-duracao objeto)))
-    (reverse (map-contorno-duracao #L(inverter-por-y !1 ponto-medio) (pontos objeto)))))
+    (make-contorno-duracao (reverse (mapcar #L(inverter-por-y !1 ponto-medio) (pontos objeto))))))
 
 (defmethod rotacionar ((objeto contorno-duracao) &optional (fator 1))
   "Rotaciona um contorno em codificação com duração a partir de um
@@ -86,4 +86,4 @@ dado fator."
       (error "Fator não pode ser maior que tamanho do contorno.")
       (let ((x (mapcar #'ponto-x (pontos objeto)))
             (y (mapcar #'ponto-y (pontos objeto))))
-        (mapcar #'list x (append (subseq y fator) (subseq y 0 fator))))))
+        (make-contorno-duracao (mapcar #'make-ponto x (append (subseq y fator) (subseq y 0 fator)))))))

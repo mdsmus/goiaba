@@ -1,5 +1,8 @@
 (in-package #:goiaba)
 
+(defmethod ponto->lista ((obj ponto))
+  (list (ponto-x obj) (ponto-y obj)))
+
 (defmethod transpor ((obj ponto) fator)
   "Transpõe um ponto de um contorno a partir de um dado fator."
   (make-ponto (ponto-x obj)
