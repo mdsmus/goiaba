@@ -22,9 +22,13 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 (defun plot-contorno (x y nome contorno)
   "Plota um único contorno"
   (pdf:draw-object
-   (make-instance 'pdf:plot-xy :x x :y y :width 150 :height 150
+   (make-instance 'pdf:plot-xy :x x :y y :width 250 :height 150
 		  :labels&colors (list (list nome (get-color :black)))
-		  :series (list (contorno->lista contorno))
+		  :series (list (contorno->lista
+				 (typecase contorno
+				   (contorno-simples (converter contorno))
+				   (contorno-duracao contorno)
+				   (t (error "tipo de contorno errado")))))
 		  :y-axis-options '(:min-value 0)
 		  :x-axis-options '(:min-value 0))))
 
