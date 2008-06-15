@@ -28,7 +28,7 @@
   ((pontos :accessor pontos :initarg :pontos)))
 
 (defmethod print-object ((obj contorno-duracao) stream)
-  (format stream "#d(~{~a~^ ~})" (pontos obj)))
+  (format stream "#D(~{~a~^ ~})" (pontos obj)))
 
 (defun %make-contorno-duracao (stream subchar arg)
   (declare (ignore subchar arg))
@@ -52,13 +52,13 @@
   ((pontos :accessor pontos :initarg :pontos)))
 
 (defmethod print-object ((obj contorno-simples) stream)
-  (format stream "#c(~{~a~^ ~})" (pontos obj)))
+  (format stream "#S(~{~a~^ ~})" (pontos obj)))
 
 (defun %make-contorno-simples (stream subchar arg)
   (declare (ignore subchar arg))
   (make-instance 'contorno-simples :pontos (read stream t nil t)))
 
-(set-dispatch-macro-character #\# #\C #'%make-contorno-simples)
+(set-dispatch-macro-character #\# #\S #'%make-contorno-simples)
 
 (defun make-contorno-simples (lista)
   (make-instance 'contorno-simples :pontos lista))
