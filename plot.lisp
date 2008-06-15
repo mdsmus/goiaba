@@ -65,17 +65,17 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 ;;     ))
 
 
-(let ((c1 #d(#p(0 0) #p(1 5) #p(2 3) #p(3 4) #p(4 1) #p(5 3))))
-  (let ((*default-page-bounds* #(0 380 570 750)))
-    (plot-page "/tmp/foo.pdf"
-      (plot-contorno-full 50 420
-			  c1 "original" :red
-			  (transpor c1 2) "transposição" :green
-			  (retrogradar c1) "retrógrado" :blue
-			  (inverter c1) "inversão" :pink
-			  (aumentar-altura c1 2) "aumentar-altura" :lightblue
-			  (rotacionar c1 1) "rotação" :darkcyan
-			  (insere-ponto c1 '(1 3) 2) "insere ponto" :purple))))
+;; (let ((c1 #d(#p(0 0) #p(1 5) #p(2 3) #p(3 4) #p(4 1) #p(5 3))))
+;;   (let ((*default-page-bounds* #(0 380 570 750)))
+;;     (plot-page "/tmp/foo.pdf"
+;;       (plot-contorno-full 50 420
+;; 			  c1 "original" :red
+;; 			  (transpor c1 2) "transposição" :green
+;; 			  (retrogradar c1) "retrógrado" :blue
+;; 			  (inverter c1) "inversão" :pink
+;; 			  (aumentar-altura c1 2) "aumentar-altura" :lightblue
+;; 			  (rotacionar c1 1) "rotação" :darkcyan
+;; 			  (insere-ponto c1 '(1 3) 2) "insere ponto" :purple))))
 
 ;; (plot-figura (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))
 ;; 	     "original"
