@@ -32,7 +32,7 @@ fator."
 (defmethod inverter ((objeto contorno-simples) &optional eixo)
   "Inverte um contorno em codificação simples em relação à altura a
 partir de um dado eixo."
-  (let* ((eixo (or eixo (ponto-medio-altura (converter (pontos objeto))))))
+  (let* ((eixo (or eixo (ponto-medio-altura (converter objeto)))))
     (map-contorno-simples #L(- (* 2 eixo) !1) (pontos objeto))))
 
 (defmethod retrogradar ((objeto contorno-simples))
