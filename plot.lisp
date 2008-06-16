@@ -21,18 +21,21 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 		    :y-axis-options '(:min-value 0)
 		    :x-axis-options '(:min-value 0)))))
 
-(defun plot-contorno (x y nome contorno)
+(defun plot-contorno (x y nome contorno &key (width 250) (height 250) (font-size 7.0))
   "Plota um único contorno"
   (pdf:draw-object
-   (make-instance 'pdf:plot-xy :x x :y y :width 250 :height 150
+   (make-instance 'pdf:plot-xy :x x :y y :width width :height height
 		  :labels&colors (list (list nome (get-color :black)))
 		  :series (list (contorno->lista
 				 (typecase contorno
 				   (contorno-simples (converter contorno))
 				   (contorno-duracao contorno)
 				   (t (error "tipo de contorno errado")))))
-		  :y-axis-options '(:min-value 0)
-		  :x-axis-options '(:min-value 0))))
+		  :legend-options '(:label-font-size 7.0)
+		  :y-axis-options `(:min-value 0
+				    :label-font-size ,font-size)
+		  :x-axis-options `(:min-value 0
+				    :label-font-size ,font-size))))
 
 (defun plot-figura (contorno nome arquivo)
   (let ((*default-page-bounds* #(0 650 280 850)))
@@ -47,23 +50,21 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
        ,@body)
        (pdf:write-document ,file)))
 
+;; (plot-contorno-full 50 500
+;; 		    c1 "original" :red
+;; 		    (transpor c1 2) "transposição" :green
+;; 		    (retrogradar c1) "retrógrado" :blue
+;; 		    (inverter c1) "inversão" :pink
+;; 		    (aumentar-altura c1 2) "aumentar-altura" :lightblue
+;; 		    (rotacionar c1 1) "rotação" :darkcyan
+;; 		    (insere-ponto c1 '(1 3) 2) "insere ponto" :purple)
+
 ;; (let ((c1 (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))))
 ;;   (with-document ()
 ;;     (with-page ()
-;;       (plot-contorno-full 50 500
-;; 			  c1 "original" :red
-;; 			  (transpor c1 2) "transposição" :green
-;; 			  (retrogradar c1) "retrógrado" :blue
-;; 			  (inverter c1) "inversão" :pink
-;; 			  (aumentar-altura c1 2) "aumentar-altura" :lightblue
-;; 			  (rotacionar c1 1) "rotação" :darkcyan
-;; 			  (insere-ponto c1 '(1 3) 2) "insere ponto" :purple)
-;;       (plot-contorno 50  300 "original" c1)
-;;       (plot-contorno 300 300 "transposição" (transpor c1 2))
-;;       )
-;;     (write-document "/tmp/foo.pdf")
-;;     ))
-
+;;       (plot-contorno 50  300 "original" c1 :width 150 :height 150 :font-size 5.0)
+;;       (plot-contorno 300 300 "transposição" (transpor c1 2)))
+;;     (write-document "/tmp/foo.pdf")))
 
 ;; (let ((c1 #d(#p(0 0) #p(1 5) #p(2 3) #p(3 4) #p(4 1) #p(5 3))))
 ;;   (let ((*default-page-bounds* #(0 380 570 750)))
