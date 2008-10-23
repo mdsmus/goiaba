@@ -16,6 +16,9 @@ uma lista de alturas (contorno simples)."
          for n from 0 to (length (pontos objeto))
          collect (make-ponto n elemento))))
 
+(defmethod contorno->lista ((objeto contorno-simples))
+  (mapcar #'ponto->lista (pontos (converter objeto))))
+
 (defmethod menor-altura ((objeto contorno-simples))
   "Retorna a menor altura de um contorno em codificação simples."
   (first (sort (pontos objeto) #'<)))
@@ -23,6 +26,20 @@ uma lista de alturas (contorno simples)."
 (defmethod maior-altura ((objeto contorno-simples))
   "Retorna a maior altura de um contorno em codificação simples."
   (first (sort (pontos objeto) #'>)))
+
+(defmethod aumentar-altura ((objeto contorno-simples) fator)
+  "Multiplica a altura de todos os pares de um contorno por um
+dado fator."
+  (map-contorno-duracao #L(aumentar-altura !1 fator) (pontos (converter objeto))))
+
+(defmethod insere-ponto ((objeto contorno-simples) ponto segmento)
+  "Insere um ponto em um contorno de um segmento dado."
+  (let ((pontos (pontos (converter objeto))))
+    (if (> segmento (length pontos))
+        (error "Segmento não pode ser maior que tamanho do contorno.")
+        (make-contorno-duracao (append (subseq pontos 0 segmento)
+                                       (list (make-ponto-lista ponto))
+                                       (subseq pontos segmento))))))
 
 (defmethod transpor ((objeto contorno-simples) fator)
   "Transpõe um contorno em codificação simples a partir de um dado
