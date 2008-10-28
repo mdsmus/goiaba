@@ -1,2 +1,2 @@
 clean:
-	rm *.fasl
+	rm -f *.fasl
