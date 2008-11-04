@@ -50,6 +50,14 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
        ,@body)
        (pdf:write-document ,file)))
 
+(defun plot-contorno-full-to-file (name xdim ydim bounds &rest lista-contornos)
+  (let ((*default-page-bounds* bounds))
+    (plot-page name
+      (apply #'plot-contorno-full xdim ydim lista-contornos))))
+
+(defun simple-plot (&rest contornos)
+  (apply #'plot-contorno-full-to-file "/tmp/foo.pdf" 50 50 #(0 0 580 400) contornos))
+
 ;; (plot-contorno-full 50 500
 ;; 		    c1 "original" :red
 ;; 		    (transpor c1 2) "transposição" :green
