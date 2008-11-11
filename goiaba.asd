@@ -12,12 +12,7 @@
                (:file "contorno-duracao")
                (:file "contorno-simples")
                (:file "utils")
-;;               (:file "lily")
-	       (:file "cores")
+               (:file "cores")
                (:file "plot")
-;;	       (:file "pdf")
-;;;                (:module literatura
-;;;                         :components ((:file "adams")
-;;;                                      (:file "friedmann")
-;;;                                      (:file "morris")))
-               ))
+               (:module literatura
+                        :components ((:file "morris")))))
