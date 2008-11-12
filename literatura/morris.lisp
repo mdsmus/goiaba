@@ -5,13 +5,13 @@
         collect (loop for x in list
                       collect (positivo-ou-negativo (- x y)))))
 
-(defmethod matriz-de-comparacao ((objeto contorno))
+(defmethod matriz-de-comparacao ((objeto contorno-simples))
   "Gera a matriz de comparação de um contorno em codificação simples."
-  (let ((fn (typecase objeto
-              (contorno-simples #'identity)
-              (contorno-duracao #'converter)
-              (t (error "nao conheço objeto ~a" objeto)))))
-    (make-contorno-simples (%matriz (pontos (funcall fn objeto))))))
+  (make-contorno-simples (%matriz (pontos objeto))))
+
+(defmethod matriz-de-comparacao ((objeto contorno-duracao))
+  "Gera a matriz de comparação de um contorno em codificação com duração."
+  (make-contorno-simples (%matriz (pontos (converter objeto)))))
 
 (defmethod print-matriz-de-comparacao ((objeto contorno))
     (let ((contorno (pontos objeto))
