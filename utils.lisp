@@ -8,8 +8,3 @@
     (if (zerop numero)
         0
         (/ numero (abs numero))))
-
-(defun concat (&rest string)
-  "Concatena strings."
-  (apply #'concatenate 'string string))
-

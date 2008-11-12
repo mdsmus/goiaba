@@ -22,10 +22,12 @@
 
 (set-dispatch-macro-character #\# #\P #'%make-ponto)
 
-;;; contorno com duração
-(defclass contorno-duracao ()
-  ;; guarda os pontos em uma lista
+;;; contorno
+(defclass contorno ()
   ((pontos :accessor pontos :initarg :pontos)))
+
+;;; contorno com duração
+(defclass contorno-duracao (contorno) ())
 
 (defmethod print-object ((obj contorno-duracao) stream)
   (format stream "#D(~{~a~^ ~})" (pontos obj)))
@@ -48,8 +50,7 @@
   (map-contorno-duracao #'make-ponto-lista lista))
 
 ;;; contorno simples
-(defclass contorno-simples ()
-  ((pontos :accessor pontos :initarg :pontos)))
+(defclass contorno-simples (contorno) ())
 
 (defmethod print-object ((obj contorno-simples) stream)
   (format stream "#S(~{~a~^ ~})" (pontos obj)))

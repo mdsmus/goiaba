@@ -5,7 +5,7 @@
   :version "0.4"
   :author "Marcos di Silva e Pedro Kroger"
   :serial t
-  :depends-on (:cl-ppcre :arnesi :cl-pdf)
+  :depends-on (:cl-ppcre :arnesi :cl-pdf :cl-utils)
   :components ((:file "packages")
                (:file "classes")
                (:file "ponto")
