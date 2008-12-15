@@ -2,9 +2,7 @@
 
 (define-test converter
   (assert-equal #s(3 2 6) (converter #d(#p(0 3) #p(1 2) #p(4 6))))
-  (assert-equal #s(3 2 6) (converter #d(#p(1 2) #p(0 3) #p(4 6))))
-  (assert-equal #d(#p(0 11) #p(1 3) #p(2 5) #p(3 4)) (converter #s(11 3 5 4)))
-  (assert-equal #d(#p(0 1) #p(1 0) #p(2 1) #p(3 0) #p(4 1)) (converter #s(1 0 1 0 1))))
+  (assert-equal #s(3 2 6) (converter #d(#p(1 2) #p(0 3) #p(4 6)))))
 
 (define-test menor-altura
   (assert-equal 1 (menor-altura #s(2 3 1)))
