@@ -1,2 +1,3 @@
 clean:
-	rm -f *.fasl
+	find -name "*~" -exec rm {} \;
+	find -name "*.fasl" -exec rm {} \;
