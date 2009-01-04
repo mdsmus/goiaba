@@ -1,4 +1,4 @@
-(in-package #:goiaba-testes)
+(in-package #:goiaba)
 
 (define-test inverter-cas
   (assert-equal '(-1) (inverter-cas '(1)))

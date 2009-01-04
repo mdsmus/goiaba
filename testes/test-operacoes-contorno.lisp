@@ -1,4 +1,4 @@
-(in-package #:goiaba-testes)
+(in-package #:goiaba)
 
 (define-test ponto-medio-duracao
   (assert-equal 1 (ponto-medio-duracao '((0 1) (2 4))))

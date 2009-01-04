@@ -1,4 +1,4 @@
-(in-package #:goiaba-testes)
+(in-package #:goiaba)
 
 (define-test converter
   (assert-equal #s(3 2 6) (converter #d(#p(0 3) #p(1 2) #p(4 6))))

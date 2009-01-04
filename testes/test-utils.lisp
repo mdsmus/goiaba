@@ -1,4 +1,4 @@
-(in-package #:goiaba-testes)
+(in-package #:goiaba)
 
 (define-test positivo-ou-negativo
   (assert-equal 1 (positivo-ou-negativo 3))

@@ -15,4 +15,13 @@
                (:file "cores")
                (:file "plot")
                (:module literatura
-                        :components ((:file "morris")))))
+                        :components ((:file "morris")))
+               (:module testes
+                        :components ((:file "test-adams")
+                                     (:file "test-contorno-duracao")
+                                     (:file "test-contorno-simples")
+                                     (:file "test-friedmann")
+                                     (:file "test-operacoes-contorno")
+                                     (:file "test-ponto")
+                                     (:file "test-utils")))))
+
