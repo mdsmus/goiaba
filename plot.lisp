@@ -14,12 +14,32 @@
   "Plota uma sucessão de contornos no formato <contorno nome cor> no
 mesmo grafico. X e y determinam onde o gráfico aparece na página."
   (let ((lista (agrupa-por-3 lista-contornos)))
+    (print lista)
     (pdf:draw-object
      (make-instance 'pdf:plot-xy :x x :y y :width 400 :height 300
 		    :labels&colors (make-lista-cores lista)
 		    :series (mapcar #'contorno->lista (mapcar #'first lista))
 		    :y-axis-options '(:min-value 0)
 		    :x-axis-options '(:min-value 0)))))
+
+(defun plot-contorno-full2 (x y lista-contornos &key (width 250) (height 250)
+                            (font-size 7.0) (grid-line-width 0.5) (grid-line-color :black)
+                            (line-width 1) (legend-font-size 7.0))
+  "Plota uma sucessão de contornos no formato <contorno nome cor> no
+mesmo grafico. X e y determinam onde o gráfico aparece na página."
+  (let ((lista (agrupa-por-3 lista-contornos)))
+    (pdf:draw-object
+     (make-instance 'pdf:plot-xy :x x :y y :width width :height height
+                  :labels&colors (make-lista-cores lista)
+                  :h-lines-width grid-line-width
+                  :h-lines-color (get-color grid-line-color)
+                  :line-width line-width
+		  :series (mapcar #'contorno->lista (mapcar #'first lista))
+		  :legend-options `(:label-font-size ,legend-font-size)
+		  :y-axis-options `(:min-value 0
+				    :label-font-size ,font-size)
+		  :x-axis-options `(:min-value 0
+				    :label-font-size ,font-size)))))
 
 (defun plot-contorno (x y nome contorno &key (width 250) (height 250) (line-color :black)
                       (font-size 7.0) (grid-line-width 0.5) (grid-line-color :black)
@@ -95,3 +115,18 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 ;; (plot-figura (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))
 ;; 	     "original"
 ;; 	     "/tmp/figura.pdf")
+
+;; (let ((c1 (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))))
+;;   (let ((*default-page-bounds* #(0 380 570 750)))
+;;     (plot-page "/tmp/foo.pdf"
+;;       (plot-contorno-full2 50 420
+;;                            (list c1 "original" :red
+;;                                  (transpor c1 2) "transposição" :green
+;;                                  (retrogradar c1) "retrógrado" :blue
+;;                                  (inverter c1) "inversão" :pink
+;;                                  (aumentar-altura c1 2) "aumentar-altura" :lightblue
+;;                                  (rotacionar c1 1) "rotação" :darkcyan
+;;                                  (insere-ponto c1 '(1 3) 2) "insere ponto" :purple)
+;;                            :width 150 :height 150 :font-size 12.0
+;;                            :grid-line-width 1 :grid-line-color :red
+;;                            :line-width 1.5 :legend-font-size 20.0))))
