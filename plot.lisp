@@ -21,17 +21,22 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 		    :y-axis-options '(:min-value 0)
 		    :x-axis-options '(:min-value 0)))))
 
-(defun plot-contorno (x y nome contorno &key (width 250) (height 250) (font-size 7.0))
+(defun plot-contorno (x y nome contorno &key (width 250) (height 250) (line-color :black)
+                      (font-size 7.0) (grid-line-width 0.5) (grid-line-color :black)
+                      (line-width 1) (legend-font-size 7.0))
   "Plota um único contorno"
   (pdf:draw-object
    (make-instance 'pdf:plot-xy :x x :y y :width width :height height
-		  :labels&colors (list (list nome (get-color :black)))
+		  :labels&colors (list (list nome (get-color line-color)))
+                  :h-lines-width grid-line-width
+                  :h-lines-color (get-color grid-line-color)
+                  :line-width line-width
 		  :series (list (contorno->lista
 				 (typecase contorno
 				   (contorno-simples (converter contorno))
 				   (contorno-duracao contorno)
 				   (t (error "tipo de contorno errado")))))
-		  :legend-options '(:label-font-size 7.0)
+		  :legend-options `(:label-font-size ,legend-font-size)
 		  :y-axis-options `(:min-value 0
 				    :label-font-size ,font-size)
 		  :x-axis-options `(:min-value 0
@@ -70,8 +75,9 @@ mesmo grafico. X e y determinam onde o gráfico aparece na página."
 ;; (let ((c1 (make-contorno-duracao-lista '((0 0) (1 5) (2 3) (3 4) (4 1) (5 3) (6 2) (7 1)))))
 ;;   (with-document ()
 ;;     (with-page ()
-;;       (plot-contorno 50  300 "original" c1 :width 150 :height 150 :font-size 5.0)
-;;       (plot-contorno 300 300 "transposição" (transpor c1 2)))
+;;       (plot-contorno 50  300 "original" c1 :width 150 :height 150 :font-size 12.0
+;;                      :grid-line-width 1 :grid-line-color :red :line-color :green
+;;                      :line-width 1.5 :legend-font-size 20.0))
 ;;     (write-document "/tmp/foo.pdf")))
 
 ;; (let ((c1 #d(#p(0 0) #p(1 5) #p(2 3) #p(3 4) #p(4 1) #p(5 3))))
