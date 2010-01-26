@@ -1,3 +1,42 @@
+Para rodar o goiaba é necessário instalar o sbcl [1], as bibliotecas
+arnesi [2] e alien [3], o emacs [4] e o slime cvs [5].
+
+É preciso configurar o ~/.emacs com as linhas
+
+(add-to-list 'load-path "path-to-slime")
+(setq inferior-lisp-program "path-to/usr/bin/sbcl")
+(setenv "SBCL_HOME" "path-to/usr/lib/sbcl")
+
+(require 'slime)
+(slime-setup '(slime-fancy slime-asdf slime-banner))
+(add-to-list 'auto-mode-alist '("\\.lisp$" . lisp-mode))
+(setq slime-startup-animation nil)
+(setq slime-complete-symbol-function 'slime-fuzzy-complete-symbol)
+
+É preciso configurar o ~/.sbclrc com as linhas
+
+(require 'asdf)
+(push "path-to-alien" asdf:*central-registry*)
+(push "path-to-arnesi" asdf:*central-registry*)
+(push "path-to-goiaba" asdf:*central-registry*)
+
+Footnotes
+
+[1] http://www.sbcl.org/
+[2] http://common-lisp.net/project/bese/arnesi.html
+[3] http://github.com/kroger/alien
+[4] http://www.gnu.org/software/emacs/
+[5] http://common-lisp.net/project/slime/
+
+-----
+
+Para rodar o goiaba é preciso abrir o emacs, fazer M-x slime
+Então, no prompt do sbcl no slime, fazer 
+(require :goiaba)
+(in-package :goiaba)
+
+-----
+
 Para plotar um contorno usando as funções em plot.lisp crie um arquivo
 lisp separado (e.g. foo.lisp) com o seguinte conteudo:
 
